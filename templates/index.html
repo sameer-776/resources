@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Poornima Library — Resources</title>
   <link
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@300;400;500&display=swap"
@@ -182,22 +182,48 @@
 
     <section id="facilities" class="section alt">
       <div class="container">
-        <h2 class="section-title reveal">Facilities</h2>
-        <div class="grid two-col">
-          <div class="feature-card reveal">
-            <img src="https://pu-rbl-s3.s3.ap-south-1.amazonaws.com/library/library-hall.webp" alt="Reading hall">
-            <div class="feature-body">
-              <h3>Reading Halls</h3>
-              <p>Quiet, spacious reading halls with ergonomic seating and extended hours during exams.</p>
-            </div>
+        <h2 class="section-title reveal">Facilities & Services</h2>
+        <div class="facilities-grid">
+
+          <div class="facility-card reveal">
+            <div class="facility-icon"><i class="fas fa-book-open"></i></div>
+            <h3>Spacious Reading Halls</h3>
+            <p>Comfortable, well-lit seating for over 200 students, creating a perfect environment for focused study.
+            </p>
           </div>
-          <div class="feature-card reveal delay-1">
-            <img src="https://pu-rbl-s3.s3.ap-south-1.amazonaws.com/library/digital-lab.webp" alt="Computer lab">
-            <div class="feature-body">
-              <h3>Digital Lab</h3>
-              <p>High-speed computers with licensed research software and remote access to databases.</p>
-            </div>
+
+          <div class="facility-card reveal">
+            <div class="facility-icon"><i class="fas fa-database"></i></div>
+            <h3>Digital Library</h3>
+            <p>Access thousands of e-books, e-journals, and premier databases like JSTOR and IEEE Open Library.</p>
           </div>
+
+          <div class="facility-card reveal">
+            <div class="facility-icon"><i class="fas fa-exchange-alt"></i></div>
+            <h3>Easy Borrowing</h3>
+            <p>Enjoy a streamlined and simple borrowing process for our extensive collection of physical books.</p>
+          </div>
+
+          <div class="facility-card reveal">
+            <div class="facility-icon"><i class="fas fa-desktop"></i></div>
+            <h3>Digital Lab & Wi-Fi</h3>
+            <p>Utilize our computers with high-speed internet or connect your own devices to the campus-wide Wi-Fi.</p>
+          </div>
+
+          <div class="facility-card reveal">
+            <div class="facility-icon"><i class="fas fa-headset"></i></div>
+            <h3>Research Assistance</h3>
+            <p>Our expert librarians are available at assistance desks to guide you with research and academic writing.
+            </p>
+          </div>
+
+          <div class="facility-card reveal">
+            <div class="facility-icon"><i class="fas fa-id-card"></i></div>
+            <h3>Smart & Secure Access</h3>
+            <p>Secure, ID-based entry for all university students and faculty, with cloakrooms available for safe
+              storage.</p>
+          </div>
+
         </div>
       </div>
     </section>
@@ -221,8 +247,9 @@
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="site-footer">
+  <section id="team" class="section">
+    <div class="container">
+      <h2 class="section-title reveal">Devloped by</h2>
       <div class="developers-grid">
         <a href="https://www.linkedin.com/in/sameer-beniwal/" target="_blank" rel="noopener noreferrer"
           class="developer-card">
@@ -249,10 +276,14 @@
           <div class="dev-details">19405 - BCA</div>
         </a>
       </div>
-      <div class="footer-bottom-text">
-        <p class="supervision">Under the supervision of <strong>Dr. Vipin Khattri</strong></p>
-        <p class="copyright">© <span id="year"></span> Poornima Library Resources</p>
-      </div>
+    </div>
+  </section>
+
+
+  <footer class="footer">
+    <div class="site-footer">
+      <p class="supervision">Under the supervision of <strong>Dr. Vipin Khattri</strong></p>
+      <p class="copyright">© <span id="year"></span> Poornima Library Resources</p>
     </div>
   </footer>
   <script src="{{ url_for('static', filename='script.js') }}"></script>

@@ -462,41 +462,49 @@ img {
   gap: 1.2rem;
 }
 
-.two-col {
-  grid-template-columns: 1fr 1fr;
+/* === Facilities Section === */
+.facilities-grid {
+  display: grid;
+  /* This creates a responsive grid that fits as many columns as possible */
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
 }
 
-.feature-card {
-  display: flex;
-  flex-direction: column;
+.facility-card {
   background: var(--card);
   border-radius: var(--radius);
+  padding: 2rem;
+  text-align: center;
   box-shadow: var(--shadow);
-  overflow: hidden;
+  border: 1px solid var(--glass);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.feature-card img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
+.facility-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
 }
 
-.feature-body {
-  padding: 1rem;
-}
-
-.feature-body h3 {
-  margin: 0 0 0.5rem 0;
+.facility-icon {
+  font-size: 2.5rem;
   color: var(--primary);
+  margin-bottom: 1rem;
+  display: inline-block;
 }
 
-.feature-body p {
-  color: var(--muted);
+.facility-card h3 {
+  margin: 0 0 0.5rem 0;
+  color: var(--text);
+  font-size: 1.2rem;
+}
+
+.facility-card p {
   margin: 0;
+  color: var(--muted);
   font-size: 0.95rem;
+  line-height: 1.6;
 }
-
-
 
 /* Contact Section */
 .contact-container {
@@ -549,27 +557,13 @@ img {
   color: white;
 }
 
-/* === Card-Based Footer Styles === */
+/* === Team & Footer Styles === */
 
-/* Main footer container */
-.footer {
-  padding: 4rem 1rem 2rem 1rem;
-  border-top: 1px solid var(--glass);
-}
-
-.site-footer {
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-/* Grid container for the developer cards */
+/* Grid container for the developer cards (now in its own section) */
 .developers-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  /* 4 cards on wide screens */
   gap: 1.5rem;
-  margin-bottom: 2.5rem;
-  /* Space between cards and text below */
 }
 
 /* Individual developer card */
@@ -584,20 +578,17 @@ img {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Hover effect for the card */
 .developer-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
 
-/* User icon inside the card */
 .developer-card .fas.fa-user-circle {
   font-size: 2.5rem;
   color: var(--primary);
   margin-bottom: 0.75rem;
 }
 
-/* Name and details text */
 .dev-name {
   font-weight: 600;
   color: var(--text);
@@ -610,37 +601,46 @@ img {
   margin-top: 0.25rem;
 }
 
-/* Supervision and Copyright text below the cards */
-.footer-bottom-text {
+/* Simplified Footer */
+.footer {
+  padding: 4rem 1rem 2rem 1rem;
+  border-top: 1px solid var(--glass);
+}
+
+.site-footer {
+  max-width: 1000px;
+  margin: 0 auto;
   text-align: center;
-  color: var(--muted);
 }
 
 .supervision {
   font-size: 0.95rem;
   margin-bottom: 0.5rem;
+  color: var(--muted);
 }
 
 .copyright {
   font-size: 0.9rem;
+  color: var(--muted);
 }
 
-/* Responsive adjustments for smaller screens */
+.site-footer p {
+  margin: 0;
+}
+
+
+/* Responsive adjustments for Team & Footer */
 @media (max-width: 900px) {
   .developers-grid {
     grid-template-columns: repeat(2, 1fr);
-    /* 2 cards on tablets */
   }
 }
 
 @media (max-width: 600px) {
   .developers-grid {
     grid-template-columns: 1fr;
-    /* 1 card on mobile */
   }
 }
-
-/* === Upgraded Chip Styles for Resources === */
 
 /* Container for all chip categories */
 .chip-container {
@@ -752,4 +752,77 @@ img {
   background-color: var(--primary);
   border-color: var(--primary);
   transform: scale(1.1);
+}
+
+/* ======================================== */
+/* ===    Mobile & Tablet Polish        === */
+/* ======================================== */
+
+/* --- General adjustments for tablets and below --- */
+@media (max-width: 768px) {
+
+  /* Reduce the padding on all main sections */
+  .section {
+    padding: 3rem 0;
+  }
+
+  /* Make the main section titles a bit smaller */
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  /* Center the "Extras" section on mobile for consistency */
+  .extras-section h3 {
+    text-align: center;
+  }
+
+  .extras-section .chip-grid {
+    justify-content: center;
+  }
+}
+
+
+/* --- Specific adjustments for small phones --- */
+@media (max-width: 480px) {
+  body {
+    /* Improves font rendering on mobile */
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+
+  /* Further reduce hero section padding and font sizes */
+  .hero {
+    padding: 3rem 0 2rem 0;
+  }
+
+  .hero-text h1 {
+    font-size: 2.2rem;
+  }
+
+  .lead {
+    font-size: 1rem;
+  }
+
+  .btn {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.9rem;
+  }
+
+  /* Make resource "chip" category boxes less padded */
+  .chip-category {
+    padding: 1.5rem;
+  }
+
+  /* Make the interactive facility cards more compact */
+  .facility-header {
+    padding: 1.25rem 1rem;
+  }
+
+  .facility-card h3 {
+    font-size: 1rem;
+  }
+
+  .facility-body p {
+    padding: 0 1rem 1.25rem 1rem;
+    padding-top: 1.25rem;
+  }
 }
