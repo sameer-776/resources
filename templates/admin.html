@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Admin Panel</h1>
+
+        <section>
+            <h2>Manage Notices</h2>
+            <form id="notice-form">
+                <input type="hidden" id="notice-id">
+                <label for="notice-text">Notice Text</label>
+                <input type="text" id="notice-text" placeholder="Enter notice text..." required>
+                <button type="submit">Save Notice</button>
+            </form>
+            <table id="notices-table">
+                <thead>
+                    <tr>
+                        <th>Notice Text</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>Manage Links</h2>
+            <form id="link-form" enctype="multipart/form-data">
+                <input type="hidden" id="link-id">
+
+                <label for="link-title">Link Title</label>
+                <input type="text" id="link-title" placeholder="e.g., NPTEL Swayam" required>
+
+                <label for="link-url">Link URL</label>
+                <input type="url" id="link-url" placeholder="https://..." required>
+
+                <label for="link-image">Upload Image</label>
+                <input type="file" id="link-image" accept="image/png, image/jpeg, image/webp, image/svg+xml">
+
+                <button type="submit">Save Link</button>
+            </form>
+            <table id="links-table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>URL</th>
+                        <th>Image</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </section>
+        <section>
+            <h2>Manage Gallery</h2>
+            <form id="gallery-form" enctype="multipart/form-data">
+                <label for="gallery-image">Upload New Image</label>
+                <input type="file" id="gallery-image" name="image" accept="image/png, image/jpeg, image/webp" required>
+                <button type="submit">Add to Gallery</button>
+            </form>
+
+            <h3>Current Gallery</h3>
+            <div id="gallery-preview" class="gallery-preview-grid">
+            </div>
+        </section>
+    </div>
+    <script src="{{ url_for('static', filename='admin.js') }}"></script>
+</body>
+
+</html>

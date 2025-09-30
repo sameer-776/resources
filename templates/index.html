@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Poornima Library — Resources</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <meta name="description" content="Poornima Library resources — eBooks, journals, services, notices.">
+</head>
+
+<body>
+  <div id="progress-bar" aria-hidden="true"></div>
+
+  <header id="site-header" class="header">
+    <div class="container nav-grid">
+      <div class="brand">
+        <img src="https://pu-rbl-s3.s3.ap-south-1.amazonaws.com/library/logo.png" alt="Poornima Library" class="logo">
+        <div>
+          <div class="site-title">Poornima Library</div>
+          <div class="site-sub">Resources & Digital Hub</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#resources">Resources</a></li>
+          <li><a href="#facilities">Facilities</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+          <button id="darkToggle" class="icon-btn" aria-label="Toggle dark mode"><i
+              class="fa-solid fa-moon"></i></button>
+          <button id="mobileBtn" class="icon-btn mobile-only" aria-label="Open menu"><i
+              class="fa-solid fa-bars"></i></button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <div id="mobileMenu" class="mobile-menu" aria-hidden="true">
+    <button id="mobileClose" class="icon-btn mobile-close" aria-label="Close menu"><i
+        class="fa-solid fa-xmark"></i></button>
+    <ul>
+      <li><a href="#home" class="mobile-link">Home</a></li>
+      <li><a href="#resources" class="mobile-link">Resources</a></li>
+      <li><a href="#facilities" class="mobile-link">Facilities</a></li>
+      <li><a href="#contact" class="mobile-link">Contact</a></li>
+    </ul>
+  </div>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="container hero-inner">
+        <div class="hero-text">
+          <h1 class="reveal">Welcome to <span class="accent">Poornima Library</span></h1>
+          <p class="lead reveal delay-1">A modern resource hub for students — eBooks, journals, research databases and
+            digital services to help you learn faster.</p>
+          <div class="hero-cta reveal delay-2">
+            <a class="btn" href="#resources">Explore Resources</a>
+            <a class="btn ghost" href="#notices">Latest Notices</a>
+          </div>
+        </div>
+        <div class="hero-card reveal delay-3" aria-hidden="true">
+          <div class="stats">
+            <div class="stat">
+              <div class="stat-num" data-target="50000">0</div>
+              <div class="stat-label">Books</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num" data-target="15000">0</div>
+              <div class="stat-label">E-resources</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num" data-target="1000">0</div>
+              <div class="stat-label">Journals</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ticker-wrap" id="notices">
+      <div class="ticker">
+        <div class="bell"><i class="fa-solid fa-bell"></i></div>
+        <div class="ticker-track" id="tickerTrack" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="resources" class="section">
+      <div class="container">
+        <h2 class="section-title reveal">Our Resources</h2>
+        <div class="resources-grid" id="resourcesGrid"></div>
+      </div>
+    </section>
+
+    <section id="gallery" class="section gallery reveal">
+      <div class="container">
+        <h2 class="section-title">Photo Gallery</h2>
+        <div class="gallery-viewport">
+          <div id="galleryTrack" class="gallery-track"></div>
+          <button class="gallery-nav prev" aria-label="Previous">❮</button>
+          <button class="gallery-nav next" aria-label="Next">❯</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="facilities" class="section alt">
+      <div class="container">
+        <h2 class="section-title reveal">Facilities</h2>
+        <div class="grid two-col">
+          <div class="feature-card reveal">
+            <img src="https://pu-rbl-s3.s3.ap-south-1.amazonaws.com/library/library-hall.webp" alt="Reading hall">
+            <div class="feature-body">
+              <h3>Reading Halls</h3>
+              <p>Quiet, spacious reading halls with ergonomic seating and extended hours during exams.</p>
+            </div>
+          </div>
+          <div class="feature-card reveal delay-1">
+            <img src="https://pu-rbl-s3.s3.ap-south-1.amazonaws.com/library/digital-lab.webp" alt="Computer lab">
+            <div class="feature-body">
+              <h3>Digital Lab</h3>
+              <p>High-speed computers with licensed research software and remote access to databases.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="container contact-container">
+        <div class="contact-info reveal">
+          <h2>Contact & Visit</h2>
+          <p><i class="fas fa-location-dot accent"></i> Poornima University, Jaipur</p>
+          <p><i class="fas fa-envelope accent"></i> centralibrary@poornima.edu.in</p>
+          <div class="social">
+            <a href="https://www.facebook.com/poornimauniversity" target="_blank" rel="noopener noreferrer"
+              aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/poornima.university/" target="_blank" rel="noopener noreferrer"
+              aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://in.linkedin.com/school/poornima-university/" target="_blank" rel="noopener noreferrer"
+              aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="site-footer">
+      <div class="developers-grid">
+        <a href="https://www.linkedin.com/in/sameer-beniwal/" target="_blank" rel="noopener noreferrer"
+          class="developer-card">
+          <i class="fas fa-user-circle"></i>
+          <div class="dev-name">Sameer</div>
+          <div class="dev-details">17768 - B.Tech AIML</div>
+        </a>
+        <a href="http://www.linkedin.com/in/kshitijsoni07" target="_blank" rel="noopener noreferrer"
+          class="developer-card">
+          <i class="fas fa-user-circle"></i>
+          <div class="dev-name">Kshitij Soni</div>
+          <div class="dev-details">18810 - BCA</div>
+        </a>
+        <a href="https://www.linkedin.com/in/aryan-semunal-gaikwad/" target="_blank" rel="noopener noreferrer"
+          class="developer-card">
+          <i class="fas fa-user-circle"></i>
+          <div class="dev-name">Aryan Gaikwad</div>
+          <div class="dev-details">18800 - B.Tech AIML</div>
+        </a>
+        <a href="https://www.linkedin.com/in/mohit-kumar-00bb50202/" target="_blank" rel="noopener noreferrer"
+          class="developer-card">
+          <i class="fas fa-user-circle"></i>
+          <div class="dev-name">Mohit Kumar</div>
+          <div class="dev-details">19405 - BCA</div>
+        </a>
+      </div>
+      <div class="footer-bottom-text">
+        <p class="supervision">Under the supervision of <strong>Dr. Vipin Khattri</strong></p>
+        <p class="copyright">© <span id="year"></span> Poornima Library Resources</p>
+      </div>
+    </div>
+  </footer>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>
