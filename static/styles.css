@@ -639,3 +639,117 @@ img {
     /* 1 card on mobile */
   }
 }
+
+/* === Upgraded Chip Styles for Resources === */
+
+/* Container for all chip categories */
+.chip-container {
+  display: grid;
+  gap: 1.5rem;
+}
+
+/* The main white box for each category */
+.chip-category {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+  text-align: center;
+  /* This centers the heading */
+}
+
+.chip-category:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary-glow);
+}
+
+/* Category Title (e.g., "General Info") */
+.chip-category h3 {
+  margin: 0 0 1.5rem 0;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--glass);
+  color: var(--text);
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Grid that holds all the chips */
+.chip-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  justify-content: center;
+  /* This centers the chips within the box */
+}
+
+/* The individual chip links */
+.chip {
+  display: inline-block;
+  padding: 0.6rem 1.25rem;
+  border-radius: 50px;
+  font-weight: 500;
+  text-decoration: none;
+  color: #fff;
+  /* White text looks best on gradients */
+  background-image: linear-gradient(45deg, #4a54f1, #7142e0);
+  border: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.chip:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(113, 66, 224, 0.4);
+  background-image: linear-gradient(45deg, #7142e0, #4a54f1);
+  /* Reverses gradient on hover */
+}
+
+/* Special styling for the dynamic "Extras" section */
+.extras-section {
+  margin-top: 1.5rem;
+  border-left: 4px solid var(--accent);
+  /* Adds a colored accent bar */
+}
+
+.extras-section h3 {
+  text-align: left;
+  /* Aligns the "Extras" title to the left */
+}
+
+.extras-section .chip-grid {
+  justify-content: flex-start;
+  /* Aligns the dynamic chips to the left */
+}
+
+/* === Gallery Dots === */
+.gallery-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  padding: 0.5rem;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--glass);
+  border: 1px solid var(--muted);
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.dot:hover {
+  background-color: var(--muted);
+}
+
+.dot.active {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  transform: scale(1.1);
+}

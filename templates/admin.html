@@ -34,17 +34,14 @@
 
         <section>
             <h2>Manage Links</h2>
-            <form id="link-form" enctype="multipart/form-data">
+            <form id="link-form">
                 <input type="hidden" id="link-id">
 
-                <label for="link-title">Link Title</label>
-                <input type="text" id="link-title" placeholder="e.g., NPTEL Swayam" required>
+                <label for="link-title">Link Title (for "Extras" section)</label>
+                <input type="text" id="link-title" placeholder="e.g., New Arrivals" required>
 
                 <label for="link-url">Link URL</label>
                 <input type="url" id="link-url" placeholder="https://..." required>
-
-                <label for="link-image">Upload Image</label>
-                <input type="file" id="link-image" accept="image/png, image/jpeg, image/webp, image/svg+xml">
 
                 <button type="submit">Save Link</button>
             </form>
@@ -53,7 +50,6 @@
                     <tr>
                         <th>Title</th>
                         <th>URL</th>
-                        <th>Image</th>
                         <th>Actions</th>
                     </tr>
                 </thead>

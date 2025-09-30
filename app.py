@@ -1,23 +1,28 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, session, redirect, url_for
 from flask_cors import CORS
 import json
 import os
 import time
 from werkzeug.utils import secure_filename
+from functools import wraps
 
 app = Flask(__name__)
 CORS(app) 
 
-# --- File Paths ---
+# IMPORTANT: Add a secret key for session management
+app.secret_key = 'your_super_secret_key_change_this'
+
+# --- File Paths & Config ---
 NOTICE_FILE = "notices.json"
 LINK_FILE = "links.json"
-GALLERY_FILE = "gallery.json" # New file for gallery images
+GALLERY_FILE = "gallery.json"
 UPLOAD_FOLDER = 'static/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+# Ensure the upload folder exists
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-# --- Utility Functions (no change) ---
+# --- Utility Functions ---
 def read_json(file_path):
     if not os.path.exists(file_path): return []
     try:
@@ -26,25 +31,76 @@ def read_json(file_path):
 def write_json(file_path, data):
     with open(file_path, "w", encoding="utf-8") as f: json.dump(data, f, indent=4)
 
-# --- Frontend Routes (no change) ---
-@app.route("/")
-def index(): return render_template("index.html")
-@app.route("/admin")
-def admin(): return render_template("admin.html")
 
-# --- API for Notices (no change) ---
-# ... (The handle_notices and handle_single_notice functions remain the same) ...
+# --- Login Decorator ---
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'logged_in' not in session:
+            if request.path.startswith('/api/'):
+                return jsonify({"status": "error", "message": "Unauthorized"}), 401
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorated_function
+
+
+# --- Frontend Routes ---
+@app.route("/")
+def index(): 
+    return render_template("index.html")
+
+# --- Authentication Routes ---
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    error = None
+    if request.method == "POST":
+        try:
+            with open('credentials.json', 'r', encoding='utf-8') as f:
+                creds = json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError):
+            error = 'Critical error: Could not load credentials file.'
+            return render_template("login.html", error=error)
+
+        submitted_username = request.form.get('username')
+        submitted_password = request.form.get('password')
+
+        if submitted_username == creds.get('username') and submitted_password == creds.get('password'):
+            session['logged_in'] = True
+            return redirect(url_for('admin'))
+        else:
+            error = 'Invalid credentials. Please try again.'
+
+    return render_template("login.html", error=error)
+
+@app.route("/logout")
+def logout():
+    session.pop('logged_in', None)
+    return redirect(url_for('login'))
+
+
+# --- PROTECTED Admin Route ---
+@app.route("/admin")
+@login_required
+def admin():
+    return render_template("admin.html")
+
+
+# --- PROTECTED API Routes ---
 @app.route("/api/notices", methods=["GET", "POST"])
 def handle_notices():
-    if request.method == "GET": return jsonify(read_json(NOTICE_FILE))
+    if request.method == "GET":
+        return jsonify(read_json(NOTICE_FILE))
     if request.method == "POST":
+        if 'logged_in' not in session: return jsonify({"status": "error", "message": "Unauthorized"}), 401
         data = request.json
         notices = read_json(NOTICE_FILE)
         new_notice = {"id": int(time.time()), "text": data.get("text", "")}
         notices.append(new_notice)
         write_json(NOTICE_FILE, notices)
         return jsonify({"status": "success", "notice": new_notice}), 201
+
 @app.route("/api/notices/<int:notice_id>", methods=["PUT", "DELETE"])
+@login_required
 def handle_single_notice(notice_id):
     notices = read_json(NOTICE_FILE)
     if request.method == "PUT":
@@ -58,63 +114,48 @@ def handle_single_notice(notice_id):
         write_json(NOTICE_FILE, notices)
         return jsonify({"status": "deleted"})
 
-# --- API for Links (no change) ---
-# ... (The handle_links and handle_single_link functions remain the same) ...
 @app.route("/api/links", methods=["GET", "POST"])
 def handle_links():
-    if request.method == "GET": return jsonify(read_json(LINK_FILE))
+    if request.method == "GET": 
+        return jsonify(read_json(LINK_FILE))
     if request.method == "POST":
-        if 'image' not in request.files or request.files['image'].filename == '':
-            return jsonify({"status": "error", "message": "No image file provided"}), 400
-        title = request.form.get('title'); url = request.form.get('url'); file = request.files['image']
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        if 'logged_in' not in session: return jsonify({"status": "error", "message": "Unauthorized"}), 401
+        data = request.json
         links = read_json(LINK_FILE)
-        new_link = {"id": int(time.time()), "title": title, "url": url, "image": filename}
+        new_link = {"id": int(time.time()), "title": data.get("title", ""), "url": data.get("url", "")}
         links.append(new_link)
         write_json(LINK_FILE, links)
         return jsonify({"status": "success", "link": new_link}), 201
+
 @app.route("/api/links/<int:link_id>", methods=["PUT", "DELETE"])
+@login_required
 def handle_single_link(link_id):
     links = read_json(LINK_FILE)
     if request.method == "PUT":
-        link_to_update = next((l for l in links if l.get("id") == link_id), None)
-        if not link_to_update: return jsonify({"status": "error", "message": "Link not found"}), 404
-        link_to_update["title"] = request.form.get("title", link_to_update["title"])
-        link_to_update["url"] = request.form.get("url", link_to_update["url"])
-        if 'image' in request.files and request.files['image'].filename != '':
-            file = request.files['image']
-            try: os.remove(os.path.join(app.config['UPLOAD_FOLDER'], link_to_update['image']))
-            except OSError: pass
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            link_to_update["image"] = filename
+        data = request.json
+        for link in links:
+            if link.get("id") == link_id:
+                link["title"] = data.get("title", link["title"])
+                link["url"] = data.get("url", link["url"])
+                break
         write_json(LINK_FILE, links)
         return jsonify({"status": "updated"})
     if request.method == "DELETE":
-        link_to_delete = next((l for l in links if l.get("id") == link_id), None)
-        if link_to_delete:
-            try: os.remove(os.path.join(app.config['UPLOAD_FOLDER'], link_to_delete['image']))
-            except OSError: pass
         links = [l for l in links if l.get("id") != link_id]
         write_json(LINK_FILE, links)
         return jsonify({"status": "deleted"})
 
-# --- NEW API for Gallery ---
-
 @app.route("/api/gallery", methods=["GET", "POST"])
 def handle_gallery():
-    if request.method == "GET":
+    if request.method == "GET": 
         return jsonify(read_json(GALLERY_FILE))
-    
     if request.method == "POST":
+        if 'logged_in' not in session: return jsonify({"status": "error", "message": "Unauthorized"}), 401
         if 'image' not in request.files or request.files['image'].filename == '':
             return jsonify({"status": "error", "message": "No image file provided"}), 400
-        
         file = request.files['image']
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        
         gallery_images = read_json(GALLERY_FILE)
         new_image = {"id": int(time.time()), "filename": filename}
         gallery_images.append(new_image)
@@ -122,20 +163,16 @@ def handle_gallery():
         return jsonify({"status": "success", "image": new_image}), 201
 
 @app.route("/api/gallery/<int:image_id>", methods=["DELETE"])
+@login_required
 def handle_single_gallery_image(image_id):
     gallery_images = read_json(GALLERY_FILE)
     image_to_delete = next((img for img in gallery_images if img.get("id") == image_id), None)
-    
     if image_to_delete:
-        try:
-            os.remove(os.path.join(app.config['UPLOAD_FOLDER'], image_to_delete['filename']))
-        except OSError as e:
-            print(f"Error deleting file: {e.strerror}") # Log error but continue
-            
+        try: os.remove(os.path.join(app.config['UPLOAD_FOLDER'], image_to_delete['filename']))
+        except OSError as e: print(f"Error deleting file: {e.strerror}")
     images_to_keep = [img for img in gallery_images if img.get("id") != image_id]
     write_json(GALLERY_FILE, images_to_keep)
     return jsonify({"status": "deleted"})
 
-# --- Run Server ---
 if __name__ == "__main__":
     app.run(debug=True, port=5000)

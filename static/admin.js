@@ -64,7 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const linkIdInput = document.getElementById('link-id');
     const linkTitleInput = document.getElementById('link-title');
     const linkUrlInput = document.getElementById('link-url');
-    const linkImageInput = document.getElementById('link-image');
     const linksTableBody = document.querySelector('#links-table tbody');
 
     const loadLinks = async () => {
@@ -74,40 +73,30 @@ document.addEventListener('DOMContentLoaded', () => {
         links.forEach(link => {
             const row = linksTableBody.insertRow();
             row.innerHTML = `
-                <td>${escapeHTML(link.title)}</td>
-                <td>${escapeHTML(link.url)}</td>
-                <td>${escapeHTML(link.image)}</td>
-                <td>
-                    <button class="edit-btn" data-id="${link.id}" data-title="${escapeHTML(link.title)}" data-url="${escapeHTML(link.url)}" data-image="${escapeHTML(link.image)}">Edit</button>
-                    <button class="delete-btn" data-id="${link.id}">Delete</button>
-                </td>
-            `;
+            <td>${escapeHTML(link.title)}</td>
+            <td>${escapeHTML(link.url)}</td>
+            <td>
+                <button class="edit-btn" data-id="${link.id}" data-title="${escapeHTML(link.title)}" data-url="${escapeHTML(link.url)}">Edit</button>
+                <button class="delete-btn" data-id="${link.id}">Delete</button>
+            </td>
+        `;
         });
     };
 
     linkForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const id = linkIdInput.value;
-
-        if (!id && linkImageInput.files.length === 0) {
-            alert('Please select an image file when creating a new link.');
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append('title', linkTitleInput.value);
-        formData.append('url', linkUrlInput.value);
-
-        if (linkImageInput.files[0]) {
-            formData.append('image', linkImageInput.files[0]);
-        }
-
+        const body = {
+            title: linkTitleInput.value,
+            url: linkUrlInput.value
+        };
         const method = id ? 'PUT' : 'POST';
         const url = id ? `${API_BASE_URL}/links/${id}` : `${API_BASE_URL}/links`;
 
         await fetch(url, {
             method: method,
-            body: formData
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
         });
 
         linkForm.reset();
@@ -118,15 +107,12 @@ document.addEventListener('DOMContentLoaded', () => {
     linksTableBody.addEventListener('click', async (e) => {
         const target = e.target;
         const id = target.dataset.id;
-
         if (target.classList.contains('edit-btn')) {
             linkIdInput.value = id;
             linkTitleInput.value = target.dataset.title;
             linkUrlInput.value = target.dataset.url;
-            linkImageInput.value = ''; // Clear the file input
             window.scrollTo(0, linkForm.offsetTop);
         }
-
         if (target.classList.contains('delete-btn')) {
             if (confirm('Are you sure you want to delete this link?')) {
                 await fetch(`${API_BASE_URL}/links/${id}`, { method: 'DELETE' });
@@ -134,8 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
-    // Add this entire block to admin.js
-
     // --- Gallery Management ---
     const galleryForm = document.getElementById('gallery-form');
     const galleryImageInput = document.getElementById('gallery-image');

@@ -21,7 +21,7 @@
   <header id="site-header" class="header">
     <div class="container nav-grid">
       <div class="brand">
-        <img src="https://pu-rbl-s3.s3.ap-south-1.amazonaws.com/library/logo.png" alt="Poornima Library" class="logo">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Poornima Library" class="logo">
         <div>
           <div class="site-title">Poornima Library</div>
           <div class="site-sub">Resources & Digital Hub</div>
@@ -95,8 +95,75 @@
 
     <section id="resources" class="section">
       <div class="container">
-        <h2 class="section-title reveal">Our Resources</h2>
-        <div class="resources-grid" id="resourcesGrid"></div>
+        <h2 class="section-title reveal">Library Resources</h2>
+
+        <div class="chip-container">
+          <div class="chip-category">
+            <h3>General Info</h3>
+            <div class="chip-grid">
+              <a class="chip"
+                href="https://docs.google.com/document/d/1TNK0bzhNtM4ECvOu2sMU7lRHI42gTpGCXtgle8IK5A8/edit?tab=t.0#heading=h.2hmkq0nbwump"
+                target="_blank" rel="noopener noreferrer">Policy</a>
+              <a class="chip"
+                href="https://docs.google.com/document/u/1/d/1NFSsGuXRBlB9tIfeMZPzotlW_V5PzG0iDtCf4APCOPw/edit?tab=t.0"
+                target="_blank" rel="noopener noreferrer">Timings</a>
+              <a class="chip"
+                href="https://docs.google.com/document/d/1FcxG0KTW2cfj7O6G7A19o5bpmNaZ9zyq/edit#heading=h.gjdgxs"
+                target="_blank" rel="noopener noreferrer">Rules</a>
+            </div>
+          </div>
+          <div class="chip-category">
+            <h3>Academic Resources</h3>
+            <div class="chip-grid">
+              <a class="chip" href="https://drive.google.com/drive/u/1/folders/14btY-HDGKrZY60KhQxYkBUaIYf4mVy77"
+                target="_blank" rel="noopener noreferrer">Repository</a>
+              <a class="chip" href="https://drive.google.com/drive/u/1/folders/1EtDaaJFds-QoiMK01gT-hOq99T06fdvC"
+                target="_blank" rel="noopener noreferrer">Question Papers</a>
+              <a class="chip" href="https://drive.google.com/drive/u/1/folders/1DEGLEkT_U-tyWcBpxeFL4T_l5Jd31Vfr"
+                target="_blank" rel="noopener noreferrer">E-Journals</a>
+              <a class="chip" href="https://drive.google.com/drive/u/1/folders/1sj_SOagHSkFdZSaDx6pS_pu7N2zIHSOx"
+                target="_blank" rel="noopener noreferrer">e-Books</a>
+            </div>
+          </div>
+          <div class="chip-category">
+            <h3>Digital Resources</h3>
+            <div class="chip-grid">
+              <a class="chip" href="https://ekumbh.aicte-india.org/" target="_blank" rel="noopener noreferrer">AICTE
+                eBooks</a>
+              <a class="chip" href="https://drive.google.com/drive/u/1/folders/1APDuKpCoWo3sVlDnOvmDrMZnBbkS6nSc"
+                target="_blank" rel="noopener noreferrer">Open Access</a>
+              <a class="chip"
+                href="https://docs.google.com/document/d/1fYP6Be8whq7QFyFjAYL4o9qmBalzni5d/edit#heading=h.yh32g6xb8w2e"
+                target="_blank" rel="noopener noreferrer">Shodhganga</a>
+              <a class="chip" href="https://dst.gov.in/state-science-technology-programme" target="_blank"
+                rel="noopener noreferrer">India STI</a>
+              <a class="chip"
+                href="https://docs.google.com/spreadsheets/d/1nPrQJ_cF6sq86LpPi7QmdCpjtsz6UgIL/edit?gid=741646086#gid=741646086"
+                target="_blank" rel="noopener noreferrer">Research Support</a>
+              <a class="chip"
+                href="https://docs.google.com/document/d/1j7C2IIDnu3O_a_GVIAa1flOGyBp1w1qZ9UgiUanttYU/edit?tab=t.0#heading=h.w8fci1lhcobz"
+                target="_blank" rel="noopener noreferrer">NDLI</a>
+            </div>
+          </div>
+          <div class="chip-category">
+            <h3>Library Services</h3>
+            <div class="chip-grid">
+              <a class="chip" href="https://docs.google.com/document/d/1gXCypkgbeaxkN6kljYDNxY4UdaBdTEBs/edit"
+                target="_blank" rel="noopener noreferrer">ASK Librarian</a>
+              <a class="chip" href="https://drive.google.com/drive/u/0/folders/1jPhM6QlxYqzJXgDS3bPNKXKtBga6Jgzg"
+                target="_blank" rel="noopener noreferrer">Syllabus</a>
+              <a class="chip"
+                href="https://docs.google.com/spreadsheets/d/18GwXv3eCUfAGT-LNeeIbo5hU4whQ2sP0/edit?gid=1779064595#gid=1779064595"
+                target="_blank" rel="noopener noreferrer">Lib format</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="chip-category extras-section">
+          <h3>Extras</h3>
+          <div class="chip-grid" id="resourcesGrid">
+          </div>
+        </div>
       </div>
     </section>
 
@@ -104,10 +171,12 @@
       <div class="container">
         <h2 class="section-title">Photo Gallery</h2>
         <div class="gallery-viewport">
-          <div id="galleryTrack" class="gallery-track"></div>
+          <div id="galleryTrack" class="gallery-track">
+          </div>
           <button class="gallery-nav prev" aria-label="Previous">❮</button>
           <button class="gallery-nav next" aria-label="Next">❯</button>
         </div>
+        <div class="gallery-dots" id="galleryDots"></div>
       </div>
     </section>
 
