@@ -113,6 +113,7 @@ img {
 
 .nav-links {
   display: flex;
+  /* Shown by default on desktop */
   gap: 0.9rem;
   list-style: none;
   padding: 0;
@@ -120,7 +121,7 @@ img {
 }
 
 .nav-links a {
-  color: inherit;
+  color: var(--text);
   text-decoration: none;
   padding: 0.6rem 0.5rem;
   border-radius: 8px;
@@ -143,6 +144,7 @@ img {
 
 .nav-links a:hover {
   color: var(--primary);
+  transform: translateY(-2px);
 }
 
 .nav-links a:hover::after {
@@ -754,24 +756,17 @@ img {
   transform: scale(1.1);
 }
 
-/* ======================================== */
-/* ===    Mobile & Tablet Polish        === */
-/* ======================================== */
-
 /* --- General adjustments for tablets and below --- */
 @media (max-width: 768px) {
 
-  /* Reduce the padding on all main sections */
   .section {
     padding: 3rem 0;
   }
 
-  /* Make the main section titles a bit smaller */
   .section-title {
     font-size: 1.8rem;
   }
 
-  /* Center the "Extras" section on mobile for consistency */
   .extras-section h3 {
     text-align: center;
   }
@@ -785,11 +780,9 @@ img {
 /* --- Specific adjustments for small phones --- */
 @media (max-width: 480px) {
   body {
-    /* Improves font rendering on mobile */
     -webkit-font-smoothing: subpixel-antialiased;
   }
-
-  /* Further reduce hero section padding and font sizes */
+ 
   .hero {
     padding: 3rem 0 2rem 0;
   }
@@ -811,8 +804,7 @@ img {
   .chip-category {
     padding: 1.5rem;
   }
-
-  /* Make the interactive facility cards more compact */
+  
   .facility-header {
     padding: 1.25rem 1rem;
   }
@@ -824,5 +816,50 @@ img {
   .facility-body p {
     padding: 0 1rem 1.25rem 1rem;
     padding-top: 1.25rem;
+  }
+}
+
+/* --- Crucial Media Query for Mobile Navigation --- */
+.mobile-only {
+  display: none;
+  /* Hidden by default on desktop */
+}
+
+@media (max-width: 900px) {
+
+  /* Hides the text links on mobile */
+  .nav-links {
+    display: none;
+  }
+
+  /* Shows the hamburger button on mobile */
+  .mobile-only {
+    display: inline-block;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .stat {
+    width: 25%;
+    padding: 0.75rem 0;
+    /* Adds a subtle line to separate the items */
+    border-bottom: 1px solid var(--glass);
+  }
+
+  /* Removes the separator line from the very last item */
+  .stat:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .stat-num {
+    font-size: 1.5rem;
+    /* Slightly reduce number size on small screens */
   }
 }
