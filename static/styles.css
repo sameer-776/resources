@@ -464,10 +464,8 @@ img {
   gap: 1.2rem;
 }
 
-/* === Facilities Section === */
 .facilities-grid {
   display: grid;
-  /* This creates a responsive grid that fits as many columns as possible */
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 1.5rem;
   margin-top: 2rem;
@@ -559,16 +557,12 @@ img {
   color: white;
 }
 
-/* === Team & Footer Styles === */
-
-/* Grid container for the developer cards (now in its own section) */
 .developers-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
 }
 
-/* Individual developer card */
 .developer-card {
   background: var(--card);
   border: 1px solid var(--glass);
@@ -631,7 +625,6 @@ img {
 }
 
 
-/* Responsive adjustments for Team & Footer */
 @media (max-width: 900px) {
   .developers-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -644,13 +637,11 @@ img {
   }
 }
 
-/* Container for all chip categories */
 .chip-container {
   display: grid;
   gap: 1.5rem;
 }
 
-/* The main white box for each category */
 .chip-category {
   background: var(--card);
   border-radius: var(--radius);
@@ -667,7 +658,7 @@ img {
   border-color: var(--primary-glow);
 }
 
-/* Category Title (e.g., "General Info") */
+
 .chip-category h3 {
   margin: 0 0 1.5rem 0;
   padding-bottom: 0.75rem;
@@ -678,16 +669,13 @@ img {
   letter-spacing: 0.5px;
 }
 
-/* Grid that holds all the chips */
 .chip-grid {
   display: flex;
   flex-wrap: wrap;
   gap: 0.8rem;
   justify-content: center;
-  /* This centers the chips within the box */
 }
 
-/* The individual chip links */
 .chip {
   display: inline-block;
   padding: 0.6rem 1.25rem;
@@ -695,7 +683,6 @@ img {
   font-weight: 500;
   text-decoration: none;
   color: #fff;
-  /* White text looks best on gradients */
   background-image: linear-gradient(45deg, #4a54f1, #7142e0);
   border: none;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -706,27 +693,24 @@ img {
   transform: translateY(-3px) scale(1.05);
   box-shadow: 0 8px 25px rgba(113, 66, 224, 0.4);
   background-image: linear-gradient(45deg, #7142e0, #4a54f1);
-  /* Reverses gradient on hover */
 }
 
-/* Special styling for the dynamic "Extras" section */
 .extras-section {
   margin-top: 1.5rem;
   border-left: 4px solid var(--accent);
-  /* Adds a colored accent bar */
 }
 
 .extras-section h3 {
   text-align: left;
-  /* Aligns the "Extras" title to the left */
+  
 }
 
 .extras-section .chip-grid {
   justify-content: flex-start;
-  /* Aligns the dynamic chips to the left */
+  
 }
 
-/* === Gallery Dots === */
+
 .gallery-dots {
   display: flex;
   justify-content: center;
@@ -756,7 +740,7 @@ img {
   transform: scale(1.1);
 }
 
-/* --- General adjustments for tablets and below --- */
+
 @media (max-width: 768px) {
 
   .section {
@@ -777,7 +761,7 @@ img {
 }
 
 
-/* --- Specific adjustments for small phones --- */
+
 @media (max-width: 480px) {
   body {
     -webkit-font-smoothing: subpixel-antialiased;
@@ -800,7 +784,7 @@ img {
     font-size: 0.9rem;
   }
 
-  /* Make resource "chip" category boxes less padded */
+ 
   .chip-category {
     padding: 1.5rem;
   }
@@ -819,20 +803,18 @@ img {
   }
 }
 
-/* --- Crucial Media Query for Mobile Navigation --- */
 .mobile-only {
   display: none;
-  /* Hidden by default on desktop */
+  
 }
 
 @media (max-width: 900px) {
 
-  /* Hides the text links on mobile */
   .nav-links {
     display: none;
   }
 
-  /* Shows the hamburger button on mobile */
+
   .mobile-only {
     display: inline-block;
   }
@@ -848,11 +830,11 @@ img {
   .stat {
     width: 25%;
     padding: 0.75rem 0;
-    /* Adds a subtle line to separate the items */
+   
     border-bottom: 1px solid var(--glass);
   }
 
-  /* Removes the separator line from the very last item */
+  
   .stat:last-child {
     border-bottom: none;
     padding-bottom: 0;
@@ -860,6 +842,5 @@ img {
 
   .stat-num {
     font-size: 1.5rem;
-    /* Slightly reduce number size on small screens */
   }
 }

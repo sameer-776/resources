@@ -9,20 +9,18 @@ from functools import wraps
 app = Flask(__name__)
 CORS(app) 
 
-# IMPORTANT: Add a secret key for session management
 app.secret_key = 'your_super_secret_key_change_this'
 
-# --- File Paths & Config ---
 NOTICE_FILE = "notices.json"
 LINK_FILE = "links.json"
 GALLERY_FILE = "gallery.json"
 UPLOAD_FOLDER = 'static/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# Ensure the upload folder exists
+
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-# --- Utility Functions ---
+
 def read_json(file_path):
     if not os.path.exists(file_path): return []
     try:
@@ -32,7 +30,6 @@ def write_json(file_path, data):
     with open(file_path, "w", encoding="utf-8") as f: json.dump(data, f, indent=4)
 
 
-# --- Login Decorator ---
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -44,12 +41,12 @@ def login_required(f):
     return decorated_function
 
 
-# --- Frontend Routes ---
+
 @app.route("/")
 def index(): 
     return render_template("index.html")
 
-# --- Authentication Routes ---
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     error = None
@@ -77,15 +74,12 @@ def logout():
     session.pop('logged_in', None)
     return redirect(url_for('login'))
 
-
-# --- PROTECTED Admin Route ---
 @app.route("/admin")
 @login_required
 def admin():
     return render_template("admin.html")
 
 
-# --- PROTECTED API Routes ---
 @app.route("/api/notices", methods=["GET", "POST"])
 def handle_notices():
     if request.method == "GET":

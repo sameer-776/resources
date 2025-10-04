@@ -1,19 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
   const API_BASE_URL = 'http://127.0.0.1:5000/api';
 
-  // --- DOM Helpers ---
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => Array.from(document.querySelectorAll(sel));
 
-  // --- Dynamic Content Loading ---
-  // Replace the fetchLinks function in script.js
+
   const fetchLinks = async () => {
     const grid = $('#resourcesGrid');
     if (!grid) return;
     try {
       const response = await fetch(`${API_BASE_URL}/links`);
       const links = await response.json();
-      // Create simple "chip" style links for the extras
       grid.innerHTML = links.map(link => `
       <a href="${link.url}" class="chip" target="_blank" rel="noopener noreferrer">${link.title}</a>
     `).join('');
@@ -37,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // --- UI Interactivity ---
+
   const yearEl = $('#year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
@@ -113,7 +110,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // Build the slides and the dots
       gTrack.innerHTML = images.map(img =>
         `<div class="gallery-slide"><img src="/static/uploads/${img.filename}" alt="Gallery image"></div>`
       ).join('');
@@ -127,9 +123,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const dots = dotsContainer.children;
 
       const updateUI = () => {
-        // Move the track
+      
         gTrack.style.transform = `translateX(-${gIndex * 100}%)`;
-        // Update the active dot
+    
         for (let dot of dots) {
           dot.classList.remove('active');
         }
@@ -144,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3500);
       };
 
-      // Event Listeners
+ 
       $('.gallery-nav.next')?.addEventListener('click', () => {
         gIndex = (gIndex + 1) % slides.length;
         updateUI();
@@ -167,7 +163,6 @@ document.addEventListener('DOMContentLoaded', () => {
         startAuto();
       });
 
-      // Initial call
       updateUI();
       startAuto();
 
@@ -177,7 +172,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (galleryViewport) galleryViewport.innerHTML = '<p style="text-align: center; padding: 2rem;">Could not load the gallery at this time.</p>';
     }
   };
-  // --- Initializations ---
   fetchLinks();
   fetchNotices();
   setupGallery();

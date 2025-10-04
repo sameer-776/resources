@@ -120,7 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
-    // --- Gallery Management ---
     const galleryForm = document.getElementById('gallery-form');
     const galleryImageInput = document.getElementById('gallery-image');
     const galleryPreview = document.getElementById('gallery-preview');
@@ -155,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         galleryForm.reset();
-        loadGalleryImages(); // Refresh the gallery preview
+        loadGalleryImages(); 
     });
 
     galleryPreview.addEventListener('click', async (e) => {
@@ -169,13 +168,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
-    // --- Initial data load ---
+   
     loadNotices();
     loadLinks();
     loadGalleryImages();
 });
 
-// Helper function to prevent HTML injection issues from user input
 function escapeHTML(str) {
     const p = document.createElement('p');
     p.appendChild(document.createTextNode(str));
